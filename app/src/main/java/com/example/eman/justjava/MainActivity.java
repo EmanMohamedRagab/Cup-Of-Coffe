@@ -36,7 +36,13 @@ public class MainActivity extends AppCompatActivity {
         String hasName = name.getText().toString();
         int price = calculatePrice(hasWhipperCream, hasChocolate);
         String message = createOrderSummery(price, hasWhipperCream, hasChocolate, hasName);
-        displayMessage(message);
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Order Cup Of Coffee");
+        intent.putExtra(Intent.EXTRA_TEXT, message);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
 
     }
 
